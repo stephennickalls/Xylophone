@@ -1,39 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(XylophoneApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class XylophoneApp extends StatelessWidget {
+  void playSound(int num) {
+    final player = AudioCache();
+    player.play('note$num.wav');
+  }
+
+  Widget buildKey({int soundNumber, Color color}) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: color, // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {
+          playSound(soundNumber);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
+      home: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                buildKey(soundNumber: 1, color: Colors.red),
+                buildKey(soundNumber: 2, color: Colors.orange),
+                buildKey(soundNumber: 3, color: Colors.yellow),
+                buildKey(soundNumber: 4, color: Colors.lightGreen),
+                buildKey(soundNumber: 5, color: Colors.green),
+                buildKey(soundNumber: 6, color: Colors.blue),
+                buildKey(soundNumber: 7, color: Colors.purple),
+              ],
+            ),
+          ),
         ),
       ),
     );
